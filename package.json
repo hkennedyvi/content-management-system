@@ -4,6 +4,7 @@
   "description": "Employee Tracker",
   "main": "inquire.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,9 @@
   },
   "homepage": "https://github.com/hkennedyvi/homework12.github.io#readme",
   "dependencies": {
-    "inquirer": "^7.0.3"
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "inquirer": "^7.0.3",
+    "path": "^0.12.7"
   }
 }
