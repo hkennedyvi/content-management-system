@@ -37,6 +37,7 @@ function promptUser() {
                 break;
             case "Update Employee Role":
                 console.log("Update Role");
+                updateEmployee();
                 break;
             case "Update Manager Role":
                 console.log("Update Manager");
@@ -64,17 +65,28 @@ function promptUser() {
                 type: "input",
                 name: "department",
                 message: "What is their department?"
-            },{
+            }, {
                 type: "input",
                 name: "salary",
                 message: "What is their salary?"
-            },{
+            }, {
                 type: "input",
                 name: "manager",
                 message: "Who is their manager?"
             }
         ])
     }
+
+    function updateEmployee() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "department",
+                message: "What is this employee's new department?"
+            }
+        ])
+    }
+
 }
 
 promptUser();
