@@ -81,6 +81,10 @@ function promptUser() {
         inquirer.prompt([
             {
                 type: "input",
+                name: "employee_name",
+                message: "Which employee would you like to update?"
+            }, {
+                type: "input",
                 name: "department",
                 message: "What is this employee's new department?"
             }
