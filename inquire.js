@@ -74,7 +74,21 @@ function promptUser() {
                 name: "manager",
                 message: "Who is their manager?"
             }
-        ])
+        ]).then(function(answers) {
+            
+            const addedEmployees = [];
+            const newEmployee = {
+                firstName: answers.first_name,
+                lastName: answers.last_name,
+                title: answers.title,
+                department: answers.department,
+                salary: answers.salary,
+                manager: answers.manager
+            };
+
+            addedEmployees.push(newEmployee);
+            console.log(addedEmployees);
+        })
     }
 
     function updateEmployee() {
