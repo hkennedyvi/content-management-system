@@ -34,7 +34,9 @@ function promptUser() {
                 "Add employee",
                 "Remove employee",
                 "Update Employee Role",
-                "Update Employee Manager"
+                "Update Employee Manager",
+                "Add Department",
+                "Add Role"
             ]
         }
     ]).then(function (response) {
@@ -55,17 +57,25 @@ function promptUser() {
                 console.log("Add employee");
                 addEmployee();
                 break;
-            case "Remove employee":
-                console.log("Remove employee");
+            case "Remove Employee":
+                console.log("Remove Employee");
                 removeEmployee();
                 break;
             case "Update Employee Role":
                 console.log("Update Role");
                 updateEmployee();
                 break;
-            case "Update Manager Role":
+            case "Update Employee Manager":
                 console.log("Update Manager");
                 updateMgr();
+                break;
+            case "Add Department":
+                console.log("Adding department");
+                addDepartment();
+                break;
+            case "Add Role":
+                console.log("Adding role");
+                addRole();
                 break;
             default:
                 console.log("Thanks for playin'!");
@@ -74,7 +84,15 @@ function promptUser() {
     });
 
     function showEmployees() {
-        console.log(addedEmployees);
+        const query = "SELECT * FROM companyDB.employee_table";
+        connection.query(query, (err, res) => {
+            if (err) throw err;
+            for (var i = 0; i < res.length; i++) {
+                console.log("First: " + res[i].first_name + "\n Last: " + res[i].last_name + "\n\n");
+              }
+            promptUser();
+        });
+
     };
 
     function showEmployeesByDept() {
@@ -137,7 +155,25 @@ function promptUser() {
     };
 
     function removeEmployee() {
-        console.log("DELETED");
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "first_name",
+                message: "What is the first name of the employee you would like to remove?"
+            }, {
+                type: "input",
+                name: "last_name",
+                message: "What is their last name?"
+            }
+        ]).then(function (answer) {
+
+            const query = "DELETE FROM employee_table WHERE (first_name=? AND last_name=?)"
+            connection.query(query, [answer.first_name, answer.last_name], (err, res) => {
+                if (err) throw err;
+                console.log("DELETED");
+                promptUser();
+            })
+        })
     };
 
     function updateEmployee() {
@@ -158,15 +194,57 @@ function promptUser() {
         inquirer.prompt([
             {
                 type: "input",
-                name: "manager_name",
-                message: "Which manager would you like to update?"
+                name: "first_name",
+                message: "What is the first name of the employee you would like to update?"
             }, {
                 type: "input",
-                name: "new_role",
-                message: "What is their new role?"
+                name: "last_name",
+                message: "What is their last name?"
+            }, {
+                type: "input",
+                name: "new_manager",
+                message: "Who is their new manager?"
             }
         ])
-    }
+    };
+
+    function addDepartment() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "new_department",
+                message: "What department would you like to add?"
+            }
+        ]).then(function (answer) {
+            const query = "INSERT INTO department_table (name) VALUES (?)";
+            connection.query(query, [answer.new_department], (err, res) => {
+                if (err) throw err;
+                console.log("Department added to database");
+                promptUser();
+            })
+        })
+    };
+
+    function addRole() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "new_role",
+                message: "What role would you like to add?"
+            }, {
+                type: "input",
+                name: "new_salary",
+                message: "What is the salary?"
+            }
+        ]).then(function (answers) {
+            const query = "INSERT INTO role_table (title, salary, department_id) VALUES (?, ?, ?)";
+            connection.query(query, [answers.new_role, answers.new_salary, 50], (err, res) => {
+                if (err) throw err;
+                console.log("Role added to database");
+                promptUser();
+            })
+        })
+    };
 }
 
 promptUser();
