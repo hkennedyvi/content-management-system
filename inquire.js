@@ -92,7 +92,7 @@ promptUser = () => {
                 addRole();
                 break;
             default:
-                console.log("Thanks for playin'!");
+                console.log("Thanks for playing!");
 
         };
     });
