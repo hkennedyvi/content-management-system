@@ -1,4 +1,4 @@
-# homework12.github.io
+# Content Management System
 
 This application was designed to perform as a Content Management System for a company's management team to keep an up-to-date record of their staff. 
 
